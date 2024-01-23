@@ -122,10 +122,69 @@ class LinkedList {
     return str + "null";
   };
 
-};
+  insertAt(value, index) {
+    if (index < 0 || index > this.length) {
+      return "Invalid index";
+    };
 
-let linkedList = new LinkedList();
-linkedList.prepend(1);
-linkedList.append(2);
-linkedList.append(3);
-console.log(linkedList.toString());
+    let newNode = new Node(value, null);
+
+    if (index === 0) {
+      newNode.next = this.listHead;
+      this.listHead = newNode;
+
+      if (this.length === 0) {
+        this.listTail = newNode;
+      };
+      
+    } else {
+      let currentNode = this.listHead;
+
+      for (let i = 0; i < index - 1; i++) {
+        currentNode = currentNode.next;
+      };
+
+      newNode.next = currentNode.next;
+      currentNode.next = newNode;
+
+      if (index === this.length) {
+        this.listTail = newNode;
+      };
+
+    };
+  
+    this.length++;
+  };
+
+  removeAt(index) {
+    if (this.length === 0) {
+      return "The list is empty";
+    };
+
+    if (index < 0 || index >= this.length) {
+      return "Invalid index";
+    };
+
+    if (index === 0) {
+      this.listHead = this.listHead.next;
+
+      if (this.length === 1) {
+        this.listTail = null;
+      };
+    } else {
+      let currentNode = this.listHead;
+
+      for (let i = 0; i < index - 1; i++) {
+        currentNode = currentNode.next;
+      };
+
+      currentNode.next = currentNode.next.next;
+
+      if (index === this.length - 1) {
+        this.listTail = currentNode;
+      };
+    };
+
+    this.length--;
+  };
+};
